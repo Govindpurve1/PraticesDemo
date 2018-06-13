@@ -1,0 +1,61 @@
+﻿
+@model IEnumerable<GovindEventReminderService.Areas.Admin.Models.tblState>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.validate.min.js"></script>
+
+
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<hr />
+<table class="table" border="1">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CountryId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StateId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StateName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+
+        @*<th>
+                @Html.DisplayNameFor(model => model.DeptId)
+            </th>*@
+
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.CountryId)</td>
+            <td>@Html.DisplayFor(modelItem => item.StateId)</td>
+            <td>@Html.DisplayFor(modelItem => item.StateName)</td>
+            <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
+
+            @*<td>@Html.DisplayFor(modelItem => item.DeptId)</td>*@
+
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.StateId/* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { id = item.StateId /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.StateId/* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,466 @@
+﻿
+@{
+    ViewBag.Title = "Join";
+    Layout = "~/Views/Shared/_EventReminderLayout.cshtml";
+}
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+
+<script type="text/javascript">
+    $(document).ready(function () {
+   
+        //$("#txtDateOfBirth").datepicker({
+        //        showOn: "both",
+        //        buttonImage: "../../Images/hh.png",
+        //        buttonImageOnly: true,
+        //        changeMonth: true,
+        //        changeYear: true,
+        //        maxDate: +0,
+        //        yearRange: "-100:+0",
+        //        dateFormat: "dd-M-yy"
+               
+           
+            });
+         
+        $("#btnGetStartedNow").click(function () {
+            
+      
+            var firstName = $("#txtfirstName").val();
+            var lastName = $("#txtLastname").val();
+            var dateOfBirth = $("#txtDateOfBirth").val();
+            var mobileNo = $("#txtMobileNo").val();
+            var email = $("#txtEmail").val();
+            var password = $("#txtPassword").val();
+            var passwordAgain = $("#txtRepassword").val();
+            var required = true;
+            if (firstName == "") {
+                $("#spanFirstename").html("First Name Field is required").hide().fadeIn(1000);
+                required = false;
+            }
+            else {
+                $("#spanFirstename").html("");
+            }
+            if (lastName == "") {
+                $("#txtLastname").html("Last Name Field is required").hide().fadeIn(1000);
+                required = false;
+            }
+            else {
+                $("#txtLastname").html("");
+            }
+            if (dateOfBirth == "") {
+                $("#spanDateOfBirth").html("Date Of birth Field is required").hide().fadeIn(1000);
+                required = false;
+            }
+            else {
+                $("#spanDateOfBirth").html("");
+            }
+            if (mobileNo == "") {
+                $("#spanMobileNo").html("Mobile No. Field is required").hide().fadeIn(1000);
+                required = false;
+            }
+            else {
+                $("#spanMobileNo").html("");
+            }
+            if (email == "") {
+                $("#spanEmail").html("Email Field is required").hide().fadeIn(1000);
+                required = false;
+            }
+            else {
+                $("#spanEmail").html("");
+            }
+            if (password == "") {
+                $("#spanPassword").html("Password Field is required").hide().fadeIn(1000);
+                required = false;
+            }
+            else {
+                $("#spanPassword").html("");
+            }
+            if (passwordAgain == "") {
+                $("#spanPasswordAgain").html("Password Again Field is required").hide().fadeIn(1000);
+                required = false;
+            }
+            else {
+                $("#spanPasswordAgain").html("");
+            }
+
+        });
+        var minMxaPassword = true;
+        var passwordLength = $("#txtPassword").val().length;
+        if (passwordLength < 6 || passwordLength > 15) {
+            $("#spanPassword").html("Password should be 6 to 15 charchters").hide().fadeIn(1000);
+            minMxaPassword = false;
+        }
+        else {
+            $("#spanPassword").html("");
+        }
+        if (minMxaPassword == false) {
+            return false;
+        }
+        var PasswordAgain = true;
+        if ($("#txtRepassword").val() != $("#txtPassword").val()) {
+            $("#spanPasswordAgain").html("Password again should be same").hide().fadeIn(1000);
+            PasswordAgain = false;
+        }
+        else {
+            $("#spanPasswordAgain").html("");
+
+        }
+        if (PasswordAgain == false) {
+            return  false;
+        }
+        $("#txtEmail").focusout(function () {
+            if ($(this).val() != "") {
+                $("#spanEmail").html("");
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    url: '@Url.Action("CheckEmailAvailablity")',
+                    data: "{email:'" + $(this).val() + "'}",
+                    dataType: "json",
+                    sucess: function (response) {
+                        var value = response;
+                        if (parseInt(value) == 1) {
+                            $("#spanEmailstatus").html("<b style='color:red'>Email Id is already in use</b>").hide().fadeIn(1000);
+                            $("#btnGetStartedNow").prop("disabled", true);
+                            $("#txtEmail").focus();
+                        }
+                        else {
+                            $("#spanEmailstatus").html("<b style='color:red'>You can Use This email Id</b>").hide().fadeIn(1000);
+                            $("#btnGetStartedNow").prop("disabled", false);
+                        }
+                    },
+                    error: function (error) {
+                        alert("Error:" + error.status)
+                    }
+                });
+            }
+        });
+      
+
+    });
+
+</script>
+
+<h2> welcome to New Member</h2>
+@*<table>
+
+
+                        <tr>
+
+
+                            <th align="left">First Name</th>
+                            <th>:</th>
+                            <td>
+                                <input type="text" placeholder="Enter First name" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th align="left">Middle Name</th>
+                            <th>:</th>
+                            <td>
+                                <input type="text" placeholder="Enter Middle name" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th align="left">Last Name</th>
+                            <th>:</th>
+                            <td>
+                                <input type="text" placeholder="Enter Last name" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th align="left">Date of Birth</th>
+                            <th width="2%">:</th>
+                            <td>
+                                <input type="date" name="bday" placeholder="Select date of birth" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th align="left">Gender</th>
+                            <th width="2%">:</th>
+                            <td>
+                                <input type="radio" name="gender" value="male" checked> Male&nbsp;
+                                <input type="radio" name="gender" value="female"> Female&nbsp;
+                                <input type="radio" name="gender" value="other"> Other<br>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th align="left">Mobile No.</th>
+                            <th width="2%">:</th>
+                            <td><input type="number" name="quantity" min="1" max="10" placeholder="Enter Mobile no."></td>
+                        </tr>
+                        <tr>
+                            <th align="left">Email</th>
+                            <th width="2%">:</th>
+                            <td>
+                                <input type="email" id="txtEmail" placeholder="Enter EmailID" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th align="left">Password</th>
+                            <th width="2%">:</th>
+                            <td>
+                                <input type="password" id="txtfiPassword" placeholder="Enter Password" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th align="left">Password(again)</th>
+                            <th width="2%">:</th>
+                            <td>
+                                <input type="password" id="txtRepassword" placeholder="Retype Password" />
+                            </td>
+                        </tr>
+                        <tr>
+
+
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <input type="submit" value="GetStartedNow" />
+
+                            </td>
+
+                            </tr>
+
+
+
+
+    </table>*@
+<html>
+<head>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7" style="margin-left:0px;">
+@using (Html.BeginForm())
+{
+                <div class="customDiv" align="left">
+                   &nbsp;&nbsp;&nbsp;<h2 align="left">SignUpNow</h2>
+                   
+                        <table>
+
+                            <tr>
+                                <td></td>
+                                <td>
+                                    @if (ViewBag.Status != null)
+                                    {
+                                        if (ViewBag.Status == 1)
+                                        {
+                                            <p style="color:green">your registration sucessfully please check your email Id for actvitation account</p>
+                                        }
+                                        else
+                                        {
+                                            <p style="color:red">Registration failed</p>
+                                        }
+                                    }
+                                </td>
+                              
+                            </tr>
+                            <tr>
+                                <th align="left">First Name</th>
+                                <th>:</th>
+                             
+                   
+                           
+                                
+                                <td>
+                                    <input type="text" id="txtfirstName" placeholder="Enter First name" name="firstName" style="width:193px;margin:0px;"/>
+                                </td>
+                                <td>
+                                    <span id="spanFirstename" style="color:red"></span>
+                                </td>
+                            </tr>
+
+
+
+
+                            <tr>
+                                <th align="left">Middle Name</th>
+                                <th>:</th>
+                                <td>
+                                    <input type="text" id="txtMiddlename" placeholder="Enter Middle name" name="middleName"style="width:193px;margin:0px;" />
+                                </td>
+                                <td>
+                                    <span id="spanMiddlename" style="color:red"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th align="left">Last Name</th>
+                                <th>:</th>
+                                <td>
+                                    <input type="text" id="txtLastname" placeholder="Enter Last name" name="lastName" style="width:193px;margin:0px;" />
+                                </td>
+                                <td>
+                                    <span id="spanLastname" style="color:red"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th align="left">Date of Birth</th>
+                                <th width="2%">:</th>
+                                <td>
+                                    <input type="date" id="txtDateOfBirth" name="dateOfBirth" placeholder="Select date of birth"/>
+                                </td>
+                                <td>
+                                &nbsp;&nbsp;    <input type="checkbox" id="chkAgeSecret" value="AgeSecret" name="isAgeSecret"/>
+                                    
+                                
+                                </td>
+                                <td>
+                                    <span id="spanDateOfBirth" style="color:red"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th align="left">Gender</th>
+                                <th width="2%">:</th>
+                                <td>
+                                    <input type="radio" id="rdMale" name="gender" value="male" checked> Male&nbsp;
+                                    <input type="radio" id="rdFemale" name="gender" value="female"> Female&nbsp;
+                                    <input type="radio" id="rdOther" name="gender" value="other"> Other<br>
+                                </td>
+                                <td>
+                                    <span id="spanGender" style="color:red"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th align="left">Mobile No.</th>
+                                <th width="2%">:</th>
+                                <td><input type="number" id="txtMobileNo" name="mobileNo" min="1" max="10" placeholder="Enter Mobile no."style="width:193px;margin:0px;"></td>
+                                <td>
+                                    <span id="spanMobileNo" style="color:red"></span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th align="left">Email</th>
+                                <th width="2%">:</th>
+                                @*<td>
+                                    <input type="email" id="txtEmail" placeholder="Enter EmailID" />
+                                </td>*@
+                                <td>
+                                    @if (TempData["email"] != null)
+                                    {
+                                        <input type="email" id="txtEmail" value="@TempData["email"]" name="email" readonly="readonly" required placeholder="Enter Mail" style="width:193px;margin:0px;"/>
+                                    }
+                                    else
+                                    {
+                                        <input type="email" id="txtEmail" name="email" style="width:193px;margin:0px;" />
+                                    }
+
+
+                                    
+                                </td>
+                                <td>
+                                    <span id="spanEmail" style="color:red"></span>
+                                </td>
+                                <td>
+                                    <span id="spanEmailstatus" style="color:red"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th align="left">Password</th>
+                                <th width="2%">:</th>
+                                @*<td>
+                                    <input type="password" id="txtPassword" placeholder="Enter Password" />
+                                </td*@>
+                                <td>
+                                    @if (TempData["password"] != null)
+                                    {
+                                        <input type="password" id="txtPassword" name="password" readonly="readonly" style="width:193px;margin:0px;" />
+                                    }
+                                    else
+                                    {
+                                        <input type="password" id="txtpassword" name="password" style="width:193px;margin:0px;" />
+                                    }
+                                </td>
+                                <td>
+                                    <span id="spanPassword" style="color:red"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th align="left">Password(again)</th>
+                                <th width="2%">:</th>
+                                @*<td>
+                                    <input type="password" id="txtRepassword" placeholder="Retype Password" />
+                                </td>*@
+                                <td>
+                                    @if (TempData["password"] != null)
+                                    {
+                                        <input type="password" id="txtRepassword" readonly="readonly" style="width:193px;margin:0px;"/>
+                                    }
+                                    else
+                                    {
+                                        <input type="password" id="txtRepassword" name="password" style="width:193px;margin:0px;"/>
+                                    }
+                                </td>
+                                <td>
+                                    <span id="spanPasswordAgain" style="color:red"></span>
+                                </td>
+                            </tr>
+                            <tr>
+
+
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    @*<input type="button" id="btnGetStartedNow" value="GetStartedNow" formmethod="post" />*@
+
+                                   <input type="submit" id="btnGetStartedNow" value="submit"/>
+
+                                </td>
+
+                            </tr>
+
+
+
+
+                        </table>
+
+                   
+                    
+                </div>
+}
+            </div>
+          
+
+            <div class="col-md-4"style="margin-left:8px;">
+                
+                <div class="customDiv" style="width:20px">
+                    
+                        <div>
+                            <h2 algin="center">JoinNow</h2>
+                        </div>
+                        <div>
+                            <ul algin="center">
+                                <li>Never forget</li>
+                                <li>Convenent</li>
+                                <li>Time Saving</li>
+                                <li>Feedback</li>
+
+                            </ul>
+                        </div>
+
+                </div>
+
+            </div>
+
+            </div>
+        </div>
+    
+
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+            <script src="~/Content/bootstrap.min.css"></script>
+            <script>
+
+            </script>
+
+</body>
+</html>

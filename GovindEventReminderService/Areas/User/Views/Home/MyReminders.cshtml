@@ -1,0 +1,366 @@
+﻿@using GovindEventReminderService.Areas.User.Models;
+@{
+    ViewBag.Title = "MyReminders";
+    Layout = "~/Areas/User/Views/Shared/_LayoutPage1.cshtml";
+}
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/themes/base/dialog.css" rel="stylesheet" />
+<link href="~/Scripts/bootstrap.js" rel="stylesheet" />
+@*<link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" />*@
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+
+
+<script src="~/scripts/jquery-3.2.1.js"></script>
+<script src="~/scripts/jquery-ui-1.12.1.js"></script>
+<link href="~/Content/themes/le-frog/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/themes/le-frog/theme.css" rel="stylesheet" />
+
+<script src="~/scripts/jquery.validate.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#DivBirthdayDialog").dialog({
+            autoOpen: false,
+            width: 700,
+            resizable: false,
+            modal: true,
+            show: {
+                effect: "puff",
+                duration:1000
+            },
+            hide: {
+                effect: "puff",
+                duration:1000
+            }
+        })
+
+        $("a[name=EmailId]").click(function () {
+            var name = $(this).parent().parent().children("td").eq(2).text();
+            name = $.trim(name);
+            var userName = '@Session["FirstName"].ToString()';
+            var toEmailId = $(this).html();
+
+            $("#txtToMail").val(toEmailId);
+            $("#txtSubject").val("Event Reminder's Birthday Wishes!!!");
+            $("#txtMessage").text("Dear" + name + "\n\n" + "Wishing you a many many Happy Birthday!!!\n\n" + "Thanks and Best Regards,\n" + userName);
+            $("#divBirthdayDialog").dialog({
+                autoOpen:true
+            })
+        });
+
+        $("#DivBirthdayDialogSuccess").dialog({
+            width: 700,
+            resizable: false,
+            modal: true,
+            show: {
+                effect: "fadeIn",
+                duration:500
+            },
+            hide: {
+                effect: "fadeOut",
+                duration:500
+            }
+        })
+    });
+</script>
+
+<style type="text/css">
+    .buttonStyle {
+        font-family: Tahoma;
+        font-size: 15px;
+        font-weight: bold;
+        background-color: #FCC513;
+        color: #003399;
+        border-radius: 10px;
+        border: 5px solid gray;
+        box-shadow: 10px 10px 10px gray;
+        padding: 5px;
+        cursor: pointer;
+    }
+
+    .eventTitle {
+        font-family: Tahoma;
+        font-size: 15px;
+        font-weight: bold;
+        color: green;
+        border: 2px solid #1C5E55;
+        border-radius: 15px;
+        box-shadow: 10px 10px 10px gray;
+        padding: 5px;
+    }
+</style>
+
+<table align="right">
+    <tr>
+        <td align="right">
+            @*<b>Last Access Date & Time:</b>
+            @Convert.ToDateTime(Session["LastAccessedDateTime"]).ToString("dddd,dd MMM yyyy hh:mm:ss tt")*@
+        </td>
+    </tr>
+</table>
+<br />
+<h2 style="margin:0px;padding:5px">My Reminder</h2>
+<table width="100%" cellpadding="5">
+    <tr>
+        <td colspan="4">
+            Please enter the reminder in your life like birthday,anniversaries and holidays using one of the buttons below.
+        </td>
+    </tr>
+    <tr>
+        <td width="25%" align="center">
+            <input type="button" id="btnAddBirthdays" value="Add Birthdays" class="buttonStyle" onclick="document.location.href='/User/Home/AddBirthdays'" />
+
+            <br />
+            <b style="color:green;font-size:10px">Enter multiple Birthdays</b>
+        </td>
+        <td width="25%" align="center">
+            <input type="button" id="btnBirthdayRequester" value="Birthday Requester" class="buttonStyle" onclick="document.location.href='/User/Home/BirthdayRequester'" />
+
+            <br />
+            <b style="color:green;font-size:10px">Ask others to provide their birthday </b>
+        </td>
+        <td width="25%" align="center">
+            <input type="button" id="btnAddOtherEvents" value="Add other Events" class="buttonStyle" />
+
+            <br />
+            <b style="color:green;font-size:10px">Anniversary, Graduation etc. </b>
+        </td>
+        <td width="25%" align="center">
+            <input type="button" id="btnHolidays" value="holidays" class="buttonStyle" />
+
+            <br />
+            <b style="color:green;font-size:10px"> Manage Holidays</b>
+
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            <span class="eventTitle">Birthday Events</span>
+        </td>
+        <td align="right"></td>
+    </tr>
+    <tr>
+        <td colspan="4">
+            @{List<GetBirthdayDetailsByUserId> objBirthdayDetails = (List<GetBirthdayDetailsByUserId>)ViewBag.BirthdayEvents;}
+
+            <table id="tblBirthday" width="100%" border="1">
+                <tr>
+                    <th width="10%">
+                        Event Date
+                    </th>
+                    <th width="10%">
+                        Event
+                    </th>
+                    <th width="10%">
+                        First Name
+                    </th>
+                    <th width="10%">
+                        Last Name
+                    </th>
+                    <th width="10%">
+                        Nick Name
+                    </th>
+                    <th width="7%">
+                        Gender
+                    </th>
+                    <th width="15%">
+                        Relationship
+                    </th>
+                    <th width="20%">
+                        Email
+                    </th>
+                    <th width="8%">
+                        Action
+                    </th>
+                </tr>
+                @foreach (GetBirthdayDetailsByUserId objBirthday in objBirthdayDetails)
+                {
+                    <tr>
+                        <td>
+                            @objBirthday.DateOfBirth
+                        </td>
+                        <td>
+                            @{DateTime dtBirthday = Convert.ToDateTime(objBirthday.DateOfBirth);
+                                int year = DateTime.Now.Year - dtBirthday.Year;}
+                            @year Birthday <img src="~/Images/hh.png" />
+                        </td>
+                        <td>
+                            @objBirthday.FirstName
+                        </td>
+                        <td>
+                            @objBirthday.LastName
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(objBirthday.NickName))
+                            {
+                                @objBirthday.NickName;
+                            }
+                            else
+                            {
+                                <span style="text-align:center">N/A</span>
+                            }
+                        </td>
+                        <td>
+                            @if (objBirthday.Gender == "M")
+                            {
+                                <span>Male</span>
+                            }
+                            else
+                            {
+                                <span>Female</span>
+                            }
+                        </td>
+                        <td>
+                            @objBirthday.RelationshipName
+                        </td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(objBirthday.EmailId))
+                            {
+                                <a name="EmailId" href="#">@objBirthday.EmailId</a>
+                            }
+                            else
+                            {
+                                <span>N/A</span>
+                            }
+                        </td>
+                        <td>
+                            @Html.ActionLink("Profile", "BirthdayProfile", new { id = objBirthday.BirthdayDetailsId })
+                            &nbsp;
+                            @Html.ActionLink("Delete", "DeleteBirthdayProfile", new { id = objBirthday.BirthdayDetailsId })
+                            &nbsp;
+                            @Html.ActionLink("Reminder", "BirthdayreminderSetup", new { id = objBirthday.BirthdayDetailsId })
+                        </td>
+                    </tr>
+                                }
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4">
+            <span class="eventTitle">Holiday Events</span>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4"></td>
+    </tr>
+    <tr>
+        <td colspan="4">
+            <span class="eventTitle">Other Events</span>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4"></td>
+    </tr>
+</table>
+
+<div id="DivBirthdayDialog" style="border-radius:10px;border:10px solid yellow;background-color:#EDFFA9;color:green" title="Send Birthday Wishes">
+    @using (Html.BeginForm("SendBirthdayMail", "Home", FormMethod.Post, new { encrypt = "multipart/form-data" }))
+    {
+        <table width="100%">
+            <tr>
+                <td width="25%">
+                    <b>To</b>
+                </td>
+                <td width="2%">:</td>
+                <td>
+                    <input type="text" name="toMail" id="txtToMail" readonly="readonly" style="width:250px" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>From</b>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="text" name="fromMail" readonly="readonly" style="width:250px" value="@Session["EmailId"].ToString()" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Subject</b>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="text" name="subject" id="txtSubject" readonly="readonly" style="width:300px" />
+                </td>
+            </tr>
+            <tr>
+                <td valign="top">
+                    <b>Message</b>
+                </td>
+                <td valign="top">:</td>
+                <td>
+                    <textarea id="txtMessage" name="message" rows="7" cols="75"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Attachment1</b>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="file" id="fileAttach1" name="fileAttach" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Attachment2</b>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="file" id="fileAttach2" name="fileAttach" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Attachment3</b>
+                </td>
+                <td>:</td>
+                <td>
+                    <input type="file" id="fileAttach3" name="fileAttach" />
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    <img id="imgbtmSendMail" src="~/Areas/User/Images/images (1).jpg" width="250" height="75" style="cursor:pointer" onclick="javascript: document.forms[0].submit();" />
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+
+@if (TempData["MailSuccess"] != null)
+{
+    <div id="DivBirthdayDialogSuccess" style="border-radius:10px;border:10px solid yellow;background-color:#EDFFA9;color:green" title="Send Birthday Wishes">
+        <p style="text-align:center">@TempData["MailSucccess"]</p>
+    </div>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       

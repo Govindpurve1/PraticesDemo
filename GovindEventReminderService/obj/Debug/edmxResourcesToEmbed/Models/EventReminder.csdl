@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EventDBModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tblUserAccountDetail">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmailId" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="Binary" MaxLength="150" FixedLength="false" Nullable="false" />
+    <Property Name="HintQuestionId" Type="Int32" />
+    <Property Name="NewHintQuestion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="DateOfRegistration" Type="DateTime" Precision="3" />
+    <Property Name="LastAccessedDateTime" Type="DateTime" Precision="3" />
+    <Property Name="IsApproved" Type="Boolean" />
+    <Property Name="IsCancelled" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="tblUserAddressDetail">
+    <Key>
+      <PropertyRef Name="AddressId" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="AddressId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="AddressLine1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CountryId" Type="Int32" />
+    <Property Name="StateId" Type="Int32" />
+    <Property Name="CityId" Type="Int32" />
+    <Property Name="PinCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="tblUserPersonalDetail">
+    <Key>
+      <PropertyRef Name="PersonalId" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="PersonalId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="NickName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="DateOfBirth" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Name="AnniversaryDate" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Name="IsAgeSecret" Type="Boolean" />
+    <Property Name="UserPhoto" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="MobileNo" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityContainer Name="EventDBEntities4" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tblUserAccountDetails" EntityType="Self.tblUserAccountDetail" />
+    <EntitySet Name="tblUserAddressDetails" EntityType="Self.tblUserAddressDetail" />
+    <EntitySet Name="tblUserPersonalDetails" EntityType="Self.tblUserPersonalDetail" />
+  </EntityContainer>
+</Schema>

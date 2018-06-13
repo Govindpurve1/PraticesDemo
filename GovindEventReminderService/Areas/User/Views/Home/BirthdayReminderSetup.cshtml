@@ -1,0 +1,95 @@
+﻿
+    @model GovindEventReminderService.Areas.User.Models.GetBirthdayReminder
+
+@{
+    ViewBag.Title = "BirthdayReminderSetup";
+    Layout = "~/Areas/User/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>BirthdayReminderSetup</h2>
+@using (Html.BeginForm())
+{
+    <table width="100%" border="1" cellpadding="2" cellspacing="2" style="background-color:#d6dbe9">
+        <tr>
+            <td height="300" valign="top">
+                <table width="100%" border="0" cellpadding="2" cellspacing="2">
+                    <tr>
+                        <td colspan="3">
+                            <span style="font-family:Tahoma;font-weight:bold">My Birthday Reminders</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td width="20%">&nbsp;</td>
+                        <td width="2%">:</td>
+                        <td>
+                            @ViewBag.Name
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td><b>Date of Birth</b></td>
+                        <td>:</td>
+                        <td>
+                            @ViewBag.DateOfBirth
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            Please remind me of this email on following days!!
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <table cellpadding="10">
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="chkDays30" name="chkDays30" value="30" checked="@Model.C30DaysBefore" />
+                                        <label for="chkDays30">30 days Before</label>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="chkDays14" name="chkDays14" value="14" checked="@Model.C14DaysBefore" />
+                                        <label for="chkDays30">14 days Before</label>
+                                    </td>
+
+                                    <td>
+                                        <input type="checkbox" id="chkDays7" name="chkDays7" value="7" checked="@Model.C7DaysBefore" />
+                                        <label for="chkDays7">7 days Before</label>
+                                    </td>
+
+                                    <td>
+                                        <input type="checkbox" id="chkDays3" name="chkDays3" value="3" checked="@Model.C3DaysBefore" />
+                                        <label for="chkDays3">3 days Before</label>
+                                    </td>
+
+                                    <td>
+                                        <input type="checkbox" id="chkDay" name="chkDays0" value="0" checked="@Model.DayofEvent" />
+                                        <label for="chkDay">Day of Event </label>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" align="center">
+                            <input type="button" value="Back" class="btn btn-primary" onclick="javascript:document.location.href='@Url.Action("MyReminders")'" />
+                            &nbsp;
+                            <input type="submit" class="btn btn-success" value="@ViewBag.Reminders" name="SubmitButton" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+}

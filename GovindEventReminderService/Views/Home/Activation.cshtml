@@ -1,0 +1,29 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Activation</title>
+</head>
+<body>
+    <div align="center">
+        @{
+            if (ViewBag.Status == 1)
+            {
+                <p style="color:green;font-family:'Bauhaus 93';font-size:20px">your account has been activated suceesfully</p>
+                <p>&nbsp;</p>
+                <p style="font-family:Tahoma;font-size:15px">please<a href="@Url.Action("Login")">Click Here</a>&nbsp;to Login</p>
+            }
+            else
+            {
+                <p style="color:red;font-family:'Bauhaus 93';font-size:20px">your account has been activation failed</p>
+            }
+        }
+    </div>
+</body>
+</html>

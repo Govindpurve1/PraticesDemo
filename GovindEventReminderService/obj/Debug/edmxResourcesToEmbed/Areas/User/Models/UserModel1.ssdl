@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EventDBModel2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tblBirthdayDetails">
+    <Key>
+      <PropertyRef Name="BirthdayDetailsId" />
+    </Key>
+    <Property Name="BirthdayDetailsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="MiddleName" Type="varchar" MaxLength="50" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" />
+    <Property Name="NickName" Type="varchar" MaxLength="50" />
+    <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="DateOfBirth" Type="varchar" MaxLength="11" Nullable="false" />
+    <Property Name="AnniversaryDate" Type="varchar" MaxLength="11" />
+    <Property Name="AddressLine1" Type="varchar" MaxLength="250" />
+    <Property Name="CountryId" Type="int" />
+    <Property Name="StateId" Type="int" />
+    <Property Name="CityId" Type="int" />
+    <Property Name="PinCode" Type="varchar" MaxLength="6" />
+    <Property Name="MobileNo" Type="varchar" MaxLength="10" />
+    <Property Name="EmailId" Type="varchar" MaxLength="50" />
+    <Property Name="RelationshipId" Type="int" Nullable="false" />
+    <Property Name="Notes" Type="ntext" />
+  </EntityType>
+  <EntityType Name="tblBirthdayReminder">
+    <Key>
+      <PropertyRef Name="BirthdayReminder" />
+    </Key>
+    <Property Name="BirthdayReminder" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="BirthdayDetailsId" Type="int" Nullable="false" />
+    <Property Name="30DaysBefore" Type="bit" />
+    <Property Name="14DaysBefore" Type="bit" />
+    <Property Name="7DaysBefore" Type="bit" />
+    <Property Name="3DaysBefore" Type="bit" />
+    <Property Name="DayofEvent" Type="bit" />
+  </EntityType>
+  <EntityType Name="tblRelationship">
+    <Key>
+      <PropertyRef Name="RelationshipId" />
+    </Key>
+    <Property Name="RelationshipId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RelationshipName" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="tblReligion">
+    <Key>
+      <PropertyRef Name="ReligionId" />
+    </Key>
+    <Property Name="ReligionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ReligionName" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <Association Name="FK_tblBirthdayReminder_tblBirthdayDetails">
+    <End Role="tblBirthdayDetails" Type="Self.tblBirthdayDetails" Multiplicity="1" />
+    <End Role="tblBirthdayReminder" Type="Self.tblBirthdayReminder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblBirthdayDetails">
+        <PropertyRef Name="BirthdayDetailsId" />
+      </Principal>
+      <Dependent Role="tblBirthdayReminder">
+        <PropertyRef Name="BirthdayDetailsId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="SP_BindCity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="StateId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_BindCountry" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_BindHintQuestion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_BindRelationship" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="SP_BindState" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CountryId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_GetBirthdayDetailsByUserId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_GetBirthdayReminder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BirthdayDetailsId" Type="int" Mode="In" />
+    <Parameter Name="UserId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_GetUserDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SP_UpdateUserProfile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserId" Type="int" Mode="In" />
+    <Parameter Name="NewPassword" Type="varchar" Mode="In" />
+    <Parameter Name="HintQuestionId" Type="int" Mode="In" />
+    <Parameter Name="NewHintQuestion" Type="varchar" Mode="In" />
+    <Parameter Name="HintQuestionAnswer" Type="varchar" Mode="In" />
+    <Parameter Name="FirstName" Type="varchar" Mode="In" />
+    <Parameter Name="MiddleName" Type="varchar" Mode="In" />
+    <Parameter Name="LastName" Type="varchar" Mode="In" />
+    <Parameter Name="NickName" Type="varchar" Mode="In" />
+    <Parameter Name="DateOfBirth" Type="varchar" Mode="In" />
+    <Parameter Name="AnniversaryDate" Type="varchar" Mode="In" />
+    <Parameter Name="Gender" Type="char" Mode="In" />
+    <Parameter Name="IsAgeSecret" Type="bit" Mode="In" />
+    <Parameter Name="MobileNo" Type="varchar" Mode="In" />
+    <Parameter Name="UserPhoto" Type="varchar" Mode="In" />
+    <Parameter Name="AddressLine1" Type="varchar" Mode="In" />
+    <Parameter Name="CountryId" Type="int" Mode="In" />
+    <Parameter Name="StateId" Type="int" Mode="In" />
+    <Parameter Name="CityId" Type="int" Mode="In" />
+    <Parameter Name="PinCode" Type="nchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="EventDBModel2StoreContainer">
+    <EntitySet Name="tblBirthdayDetails" EntityType="Self.tblBirthdayDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblBirthdayReminder" EntityType="Self.tblBirthdayReminder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblRelationship" EntityType="Self.tblRelationship" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblReligion" EntityType="Self.tblReligion" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_tblBirthdayReminder_tblBirthdayDetails" Association="Self.FK_tblBirthdayReminder_tblBirthdayDetails">
+      <End Role="tblBirthdayDetails" EntitySet="tblBirthdayDetails" />
+      <End Role="tblBirthdayReminder" EntitySet="tblBirthdayReminder" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

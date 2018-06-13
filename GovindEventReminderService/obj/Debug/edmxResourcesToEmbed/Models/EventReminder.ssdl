@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EventDBModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tblUserAccountDetails">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmailId" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="Password" Type="varbinary" MaxLength="150" Nullable="false" />
+    <Property Name="HintQuestionId" Type="int" />
+    <Property Name="NewHintQuestion" Type="varchar" MaxLength="250" />
+    <Property Name="DateOfRegistration" Type="datetime" />
+    <Property Name="LastAccessedDateTime" Type="datetime" />
+    <Property Name="IsApproved" Type="bit" />
+    <Property Name="IsCancelled" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'EventDB.dbo.tblUserAddressDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="tblUserAddressDetails">
+    <Key>
+      <PropertyRef Name="AddressId" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="AddressId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="AddressLine1" Type="varchar" MaxLength="50" />
+    <Property Name="CountryId" Type="int" />
+    <Property Name="StateId" Type="int" />
+    <Property Name="CityId" Type="int" />
+    <Property Name="PinCode" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'EventDB.dbo.tblUserPersonalDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="tblUserPersonalDetails">
+    <Key>
+      <PropertyRef Name="PersonalId" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="PersonalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" />
+    <Property Name="MiddleName" Type="varchar" MaxLength="50" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" />
+    <Property Name="NickName" Type="varchar" MaxLength="50" />
+    <Property Name="Gender" Type="char" MaxLength="1" />
+    <Property Name="DateOfBirth" Type="varchar" MaxLength="11" />
+    <Property Name="AnniversaryDate" Type="varchar" MaxLength="11" />
+    <Property Name="IsAgeSecret" Type="bit" />
+    <Property Name="UserPhoto" Type="varchar" MaxLength="250" />
+    <Property Name="MobileNo" Type="varchar" MaxLength="11" />
+  </EntityType>
+  <EntityContainer Name="EventDBModel1StoreContainer">
+    <EntitySet Name="tblUserAccountDetails" EntityType="Self.tblUserAccountDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblUserAddressDetails" EntityType="Self.tblUserAddressDetails" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [tblUserAddressDetails].[AddressId] AS [AddressId], 
+    [tblUserAddressDetails].[UserId] AS [UserId], 
+    [tblUserAddressDetails].[AddressLine1] AS [AddressLine1], 
+    [tblUserAddressDetails].[CountryId] AS [CountryId], 
+    [tblUserAddressDetails].[StateId] AS [StateId], 
+    [tblUserAddressDetails].[CityId] AS [CityId], 
+    [tblUserAddressDetails].[PinCode] AS [PinCode]
+    FROM [dbo].[tblUserAddressDetails] AS [tblUserAddressDetails]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="tblUserPersonalDetails" EntityType="Self.tblUserPersonalDetails" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [tblUserPersonalDetails].[PersonalId] AS [PersonalId], 
+    [tblUserPersonalDetails].[UserId] AS [UserId], 
+    [tblUserPersonalDetails].[FirstName] AS [FirstName], 
+    [tblUserPersonalDetails].[MiddleName] AS [MiddleName], 
+    [tblUserPersonalDetails].[LastName] AS [LastName], 
+    [tblUserPersonalDetails].[NickName] AS [NickName], 
+    [tblUserPersonalDetails].[Gender] AS [Gender], 
+    [tblUserPersonalDetails].[DateOfBirth] AS [DateOfBirth], 
+    [tblUserPersonalDetails].[AnniversaryDate] AS [AnniversaryDate], 
+    [tblUserPersonalDetails].[IsAgeSecret] AS [IsAgeSecret], 
+    [tblUserPersonalDetails].[UserPhoto] AS [UserPhoto], 
+    [tblUserPersonalDetails].[MobileNo] AS [MobileNo]
+    FROM [dbo].[tblUserPersonalDetails] AS [tblUserPersonalDetails]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

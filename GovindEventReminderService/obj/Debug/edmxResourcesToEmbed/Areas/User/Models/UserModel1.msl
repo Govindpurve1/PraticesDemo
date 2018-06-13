@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EventDBModel2StoreContainer" CdmEntityContainer="EventDBEntities14">
+    <EntitySetMapping Name="tblBirthdayDetails">
+      <EntityTypeMapping TypeName="EventDBModel2.tblBirthdayDetail">
+        <MappingFragment StoreEntitySet="tblBirthdayDetails">
+          <ScalarProperty Name="RelationshipId" ColumnName="RelationshipId" />
+          <ScalarProperty Name="BirthdayDetailsId" ColumnName="BirthdayDetailsId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="NickName" ColumnName="NickName" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="AnniversaryDate" ColumnName="AnniversaryDate" />
+          <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblBirthdayReminders">
+      <EntityTypeMapping TypeName="EventDBModel2.tblBirthdayReminder">
+        <MappingFragment StoreEntitySet="tblBirthdayReminder">
+          <ScalarProperty Name="DayofEvent" ColumnName="DayofEvent" />
+          <ScalarProperty Name="BirthdayDetailsId" ColumnName="BirthdayDetailsId" />
+          <ScalarProperty Name="BirthdayReminder" ColumnName="BirthdayReminder" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="C30DaysBefore" ColumnName="30DaysBefore" />
+          <ScalarProperty Name="C14DaysBefore" ColumnName="14DaysBefore" />
+          <ScalarProperty Name="C7DaysBefore" ColumnName="7DaysBefore" />
+          <ScalarProperty Name="C3DaysBefore" ColumnName="3DaysBefore" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="SP_BindCity" FunctionName="EventDBModel2.Store.SP_BindCity">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EventDBModel2.BindCity">
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_BindCountry" FunctionName="EventDBModel2.Store.SP_BindCountry">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EventDBModel2.BindCountry">
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_BindHintQuestion" FunctionName="EventDBModel2.Store.SP_BindHintQuestion">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EventDBModel2.BindHintQuestion">
+          <ScalarProperty Name="HintQuestionId" ColumnName="HintQuestionId" />
+          <ScalarProperty Name="HintQuestion" ColumnName="HintQuestion" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_BindState" FunctionName="EventDBModel2.Store.SP_BindState">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EventDBModel2.BindState">
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_GetUserDetails" FunctionName="EventDBModel2.Store.SP_GetUserDetails">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EventDBModel2.GetUserDetails">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="HintQuetionId" ColumnName="HintQuetionId" />
+          <ScalarProperty Name="NewHintQuestion" ColumnName="NewHintQuestion" />
+          <ScalarProperty Name="HintQuestionAnswer" ColumnName="HintQuestionAnswer" />
+          <ScalarProperty Name="DateOfRegistraion" ColumnName="DateOfRegistraion" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="NickName" ColumnName="NickName" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="AnniversaryDate" ColumnName="AnniversaryDate" />
+          <ScalarProperty Name="IsAgeScreet" ColumnName="IsAgeScreet" />
+          <ScalarProperty Name="UserPhoto" ColumnName="UserPhoto" />
+          <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+          <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+          <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+          <ScalarProperty Name="StateId" ColumnName="StateId" />
+          <ScalarProperty Name="CityId" ColumnName="CityId" />
+          <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_UpdateUserProfile" FunctionName="EventDBModel2.Store.SP_UpdateUserProfile" />
+    <EntitySetMapping Name="tblRelationships">
+      <EntityTypeMapping TypeName="EventDBModel2.tblRelationship">
+        <MappingFragment StoreEntitySet="tblRelationship">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="RelationshipName" ColumnName="RelationshipName" />
+          <ScalarProperty Name="RelationshipId" ColumnName="RelationshipId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblReligions">
+      <EntityTypeMapping TypeName="EventDBModel2.tblReligion">
+        <MappingFragment StoreEntitySet="tblReligion">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ReligionName" ColumnName="ReligionName" />
+          <ScalarProperty Name="ReligionId" ColumnName="ReligionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="SP_BindRelationship" FunctionName="EventDBModel2.Store.SP_BindRelationship">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EventDBModel2.BindRelationship">
+          <ScalarProperty Name="RelationshipId" ColumnName="RelationshipId" />
+          <ScalarProperty Name="RelationshipName" ColumnName="RelationshipName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_GetBirthdayDetailsByUserId" FunctionName="EventDBModel2.Store.SP_GetBirthdayDetailsByUserId">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EventDBModel2.GetBirthdayDetailsByUserId">
+          <ScalarProperty Name="BirthdayDetailsId" ColumnName="BirthdayDetailsId" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="NickName" ColumnName="NickName" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="RelationshipName" ColumnName="RelationshipName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SP_GetBirthdayReminder" FunctionName="EventDBModel2.Store.SP_GetBirthdayReminder">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="EventDBModel2.GetBirthdayReminder">
+          <ScalarProperty Name="BirthdayReminder" ColumnName="BirthdayReminder" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="BirthdayDetailsId" ColumnName="BirthdayDetailsId" />
+          <ScalarProperty Name="C30DaysBefore" ColumnName="30DaysBefore" />
+          <ScalarProperty Name="C14DaysBefore" ColumnName="14DaysBefore" />
+          <ScalarProperty Name="C7DaysBefore" ColumnName="7DaysBefore" />
+          <ScalarProperty Name="C3DaysBefore" ColumnName="3DaysBefore" />
+          <ScalarProperty Name="DayofEvent" ColumnName="DayofEvent" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

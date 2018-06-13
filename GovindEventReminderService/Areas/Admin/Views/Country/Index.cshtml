@@ -1,0 +1,371 @@
+﻿
+@model IEnumerable<GovindEventReminderService.Areas.Admin.Models.tblCountry>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage.cshtml";
+}
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/themes/base/dialog.css" rel="stylesheet" />
+<link href="~/Scripts/bootstrap.js" rel="stylesheet" />
+<link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var countryId = "";
+     
+        function loadCountryListData() 
+        {
+           
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset-utf-8",
+                url: '@Url.Action("GetCountryList")',
+                dataType: "json",
+                success: function (response) {
+                    var data = response;
+                    debugger
+                    if (data.length > 0)
+                    {
+                      
+                        var output="<table border='1' width='500px'><tr style= 'background-color:white;color:black'><th>CountryId</th><th>CountryName</th><th>ISActive</th><th>Action</th></tr>";
+                        for(var c=0; c<data.length;c++){
+                            output += "<tr><td>" + data[c].CountryId + "</td><td>" + data[c].CountryName + "</td><td>";
+                        
+                            if(data[c].IsActive==true)
+                                output +="<input type='checkbox' checked='checked' disabled='disabled'/>";
+                            else
+                                output +="<input type='checkbox' disabled='disabled'/>";
+                        
+                            output += "</td><td>" + "<a href='#' name='CEdit' id='" + data[c].CountryId + "'>Edit</a>&nbsp;|&nbsp;<a href='#' name='CDetails' id='" + data[c].CountryId + "'>Details</a>&nbsp;|&nbsp;<a href='#' name='CDelete' id='" + data[c].CountryId + "'>Delete</a>" + "</td></tr>";
+                    }
+                    output +="</table><br/><br/>";
+                    $("#divData").html(output);
+
+                    $("a[name='CEdit']").click(function () {
+                        countryId=$(this).attr("id");
+                        var tr=$(this).closest('tr');
+                        var cName=tr.children('td:eq(1)').text();
+                        var isActive=tr.children('td:eq(2)').find(":checkbox").is(":checked");
+
+                        $("txtEditCountryName").val(cName);
+                        $("chkEditIsActive").prop("checked",isActive);
+                        $("#divEdit").dialog("open");
+
+                    });
+                    $("a[name='CDelete']").click(function () {
+                        countryId = $(this).attr("id");
+                        $("#divDelete").dialog("open");
+                    });
+                    $("a[name='CDetails']").click(function () {
+                        countryId = $(this).attr("id");
+                        var tr=$(this).closest('tr');
+                        var cName=tr.children('td:eq(1)').text();
+                        var isActive=tr.children('td:eq(2)').find(":checkbox").is(":checked");
+                        $("#spanCountryId").text(countryId);
+                        $("#spanCountryName").text(cName);
+                        $("#chkDetailsActive").prop("checked", isActive);
+                        $("#divDetails").dialog("open");
+                       
+                    });
+                }
+            
+                
+            },
+                error: function (error) {
+                    alert("Error:" + error.status);
+                }
+            
+        });
+    
+         }
+            loadCountryListData();
+            $("#CreateLink").click(function () {
+                $("#divCreate").dialog("open");
+            });
+           
+            $("#divCreate").dialog({
+                autoOpen: false,
+                model: true,
+                title: "Create new Country Details...",
+                width: 500,
+                height: 350,
+                draggable: true,
+                resizeable: true,
+                show: {
+                    effect: "slide",
+                    duration: 500
+                },
+                hide: {
+                    effect: "slide",
+                    duration: 500
+                },
+                buttons: {
+                    "Save": function () {
+                        var countryName = $("#txtCountryName").val().trim();
+                        var isActive = $("#chkIsActive").is(":checked");
+                        if (countryName != "")
+                        {
+                            $.ajax({
+                                type: "POST",
+                                contentType: "application/json; charset-utf-8",
+                                url: '@Url.Action("InsertCountryDetails")',
+                                data: "{countryName:'" + countryName + "',isActive:'" + isActive + "'}",
+                                dataType: "json",
+                                success: function (response) {
+                                    var value = response;
+                                    if (parseInt(value) > 0) {
+                                        $("#divCreate").dialog("close");
+                                        loadCountryListData();
+                                    }
+                                    else {
+                                        $("#pStatus").html("<b style='color:red'>Country Insertion Failed</b>");
+                                    }
+                                },
+                                error: function (error) {
+                                    alert("Error:" + error.status);
+                                }
+                            });
+                        }
+                        else {
+                            $("#txtCountryName").after("<br/><b style='color:red'>Please enter Country Name</b>");
+                            return false;
+                        }
+                    },
+                    "Close": function () {
+                        $("#divCreate").dialog("close");
+                    }
+                }
+
+
+            });
+
+        //edit
+        
+            $("#divEdit").dialog({
+                autoOpen: false,
+                model: true,
+                width: 550,
+                show: {
+                    effect: "slide",
+                    duration: 500
+                },
+                hide: {
+                    effect: "slide",
+                    duration: 500
+                },
+                buttons: {
+                    "Update": function () {
+                        $.ajax({
+                            type: "POST",
+                            contentType: "application/json; charset-utf-8",
+                            url: '@Url.Action("UpdateCountryDetails")',
+                            data: "{countryId:'" + countryId + "',countryName:'" + $("#txtEditCountryName").val() + "',isActive:'" + $("#chkEditIsActive").is(":checked") + "'}",
+                            dataType: "json",
+                            success: function (response) {
+                                var value = response;
+                                if (parseInt(value) > 0) {
+                                    $("#divEdit").dialog("close");
+                                    loadCountryListData();
+                                }
+                                else {
+                                    $("#pStatus").html("<b style='color:red'>Country Updation Failed</b>");
+                                }
+                            },
+                            error: function (error) {
+                                alert("Error:" + error.status);
+                            }
+                        });
+
+                    
+                    },
+                    "Cancel": function () {
+                        $("#divEdit").dialog("close");
+                    }
+                }
+
+
+            });
+
+       
+            $("#divDelete").dialog({
+                autoOpen: false,
+                model: true,
+                width: 500,
+                title:"Delete Country",
+                show: {
+                    effect: "slide",
+                    duration: 500
+                },
+                hide: {
+                    effect: "slide",
+                    duration: 500
+                },
+                buttons: {
+                    "OK": function () {
+                        $.ajax({
+                            type: "POST",
+                            contentType: "application/json; charset-utf-8",
+                            url: '@Url.Action("DeleteCountryDetails")',
+                            data: "{countryId:'"+countryId+"'}",
+                            dataType: "json",
+                            success: function (response) {
+                                var value = response;
+                                if (parseInt(value) > 0) {
+                                    $("#divDelete").dialog("close");
+                                    loadCountryListData();
+                                }
+                                else {
+                                    $("#pStatus").html("<b style='color:red'>Country Deletaition Failed</b>");
+                                }
+                            },
+                            error: function (error) {
+                                alert("Error:" + error.status);
+                            }
+                        });
+                    },
+
+                    "Cancel": function () {
+                        $("#divDelete").dialog("close");
+                    }
+                }
+                
+            });
+            $("#divDetails").dialog({
+                autoOpen: false,
+                model: true,
+                width: 350,
+                show: {
+                    effect: "slide",
+                    duration: 500
+                },
+                hide: {
+                    effect: "slide",
+                    duration: 500
+                },
+                buttons: {
+                    "Close": function () {
+                        $("#divDetails").dialog("close");
+
+                    }
+                }
+            });
+    
+    });
+    </script>
+<div id="divCreate">
+    <p id="pStatus"></p>
+    <b>Country Name:</b>
+    <br />
+    <input type="text" id="txtCountryName" />
+    <br /><br />
+    <b>Is Active</b>
+    <br />
+    <input type="checkbox" id="chkIsActive" />
+    <br /><br />
+
+</div>
+
+
+<div id="divEdit">
+    <p id="pStatus"></p>
+    <b>Country Name:</b>
+    <br />
+    <input type="text" id="txtEditCountryName" />
+    <br /><br />
+    <b>Is Active</b>
+    <br />
+    <input type="checkbox" id="chkEditIsActive" />
+    <br /><br />
+
+</div>
+
+
+<h2>Country List</h2>
+<p>
+    <a href="#" id="CreateLink">Create New Country</a>
+</p>
+<div id="divData">
+
+</div>
+
+
+
+
+
+
+<div id="divDetails">
+<p id="pStatus"></p>
+<b>Country Id:</b>
+<br />
+<span id="spanCountryId"></span>
+<br /><br />
+    <b>Country Name:</b>
+    <br />
+    <span id="spanCountryName"></span>
+    <br /><br />
+<b>Is Active</b>
+<br />
+<input type="checkbox" id="chkDetailsActive" disabled="disabled" />
+<br /><br />
+
+</div>
+
+
+<div id="divDelete">
+   <b>Are U Want Delete?</b>
+   
+</div>
+
+
+<h2>Index</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+
+<hr />
+@*<table class="table" border="1">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CountryId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CountryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+      
+
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.CountryId)</td>
+            <td>@Html.DisplayFor(modelItem => item.CountryName)</td>
+            <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
+       
+    
+
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CountryId/* id=item.PrimaryKey */ })
+                @Html.ActionLink("Details", "Details", new { id = item.CountryId /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.CountryId/* id=item.PrimaryKey */ })
+
+
+                <a href="#" id="EditLink">Edit</a>|
+                <a href="#" id="DetailsLink">Details</a>|
+               <a href="#" id="DeleteLink">Delete</a>
+               
+          
+            </td>
+        </tr>
+    }
+
+</table>*@

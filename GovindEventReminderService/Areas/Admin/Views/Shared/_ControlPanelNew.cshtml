@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+
+@{
+    Layout = null;
+
+    //////Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<table style="width:100%">
+    <tr>
+        <td width="50%">
+            <b>Last Accessed Date & Time</b>@Convert.ToDateTime(Session["lastAccessDateTime"]).ToString("dddd,dd MM yyyy hh:mm:ss:tt")
+        </td>
+        <td width="50%" align="right">
+            @Html.ActionLink("Logout", "Logout", "Home")
+
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center">@Html.ActionLink("ControlPanel", "ControlPanel", "Home")</td>
+    </tr>
+    <tr>
+        <td>
+            @RenderBody()
+        </td>
+    </tr>
+</table>

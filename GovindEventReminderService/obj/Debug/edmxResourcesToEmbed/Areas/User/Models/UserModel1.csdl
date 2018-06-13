@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EventDBModel2" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tblBirthdayDetail">
+    <Key>
+      <PropertyRef Name="BirthdayDetailsId" />
+    </Key>
+    <Property Name="BirthdayDetailsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="NickName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DateOfBirth" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="AnniversaryDate" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Name="AddressLine1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="CountryId" Type="Int32" />
+    <Property Name="StateId" Type="Int32" />
+    <Property Name="CityId" Type="Int32" />
+    <Property Name="PinCode" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="MobileNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Relationshipid" Type="Int32" Nullable="false" />
+    <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="RelationshipId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tblBirthdayReminders1" Relationship="EventDBModel2.FK_tblBirthdayReminder_tblBirthdayDetails1" FromRole="tblBirthdayDetail" ToRole="tblBirthdayReminder" />
+  </EntityType>
+  <EntityType Name="tblBirthdayReminder">
+    <Key>
+      <PropertyRef Name="BirthdayReminder" />
+    </Key>
+    <Property Name="BirthdayReminder" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="BirthdaydetailsId" Type="Int32" Nullable="false" />
+    <Property Name="C30DaysBefore" Type="Boolean" />
+    <Property Name="C14DaysBefore" Type="Boolean" />
+    <Property Name="C7DaysBefore" Type="Boolean" />
+    <Property Name="C3DaysBefore" Type="Boolean" />
+    <Property Name="DayOfEvent" Type="Boolean" />
+    <Property Name="BirthdayDetailsId" Type="Int32" Nullable="false" />
+    <Property Name="DayofEvent" Type="Boolean" />
+    <NavigationProperty Name="tblBirthdayDetail1" Relationship="EventDBModel2.FK_tblBirthdayReminder_tblBirthdayDetails1" FromRole="tblBirthdayReminder" ToRole="tblBirthdayDetail" />
+  </EntityType>
+  <EntityContainer Name="EventDBEntities14" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tblBirthdayDetails" EntityType="Self.tblBirthdayDetail" />
+    <EntitySet Name="tblBirthdayReminders" EntityType="Self.tblBirthdayReminder" />
+    <FunctionImport Name="SP_BindCity" ReturnType="Collection(EventDBModel2.BindCity)">
+      <Parameter Name="StateId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_BindCountry" ReturnType="Collection(EventDBModel2.BindCountry)" />
+    <FunctionImport Name="SP_BindHintQuestion" ReturnType="Collection(EventDBModel2.BindHintQuestion)" />
+    <FunctionImport Name="SP_BindState" ReturnType="Collection(EventDBModel2.BindState)">
+      <Parameter Name="CountryId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_GetUserDetails" ReturnType="Collection(EventDBModel2.GetUserDetails)">
+      <Parameter Name="UserId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <AssociationSet Name="FK_tblBirthdayReminder_tblBirthdayDetails1" Association="EventDBModel2.FK_tblBirthdayReminder_tblBirthdayDetails1">
+      <End Role="tblBirthdayDetail" EntitySet="tblBirthdayDetails" />
+      <End Role="tblBirthdayReminder" EntitySet="tblBirthdayReminders" />
+    </AssociationSet>
+    <FunctionImport Name="SP_UpdateUserProfile">
+      <Parameter Name="UserId" Mode="In" Type="Int32" />
+      <Parameter Name="NewPassword" Mode="In" Type="String" />
+      <Parameter Name="HintQuestionId" Mode="In" Type="Int32" />
+      <Parameter Name="NewHintQuestion" Mode="In" Type="String" />
+      <Parameter Name="HintQuestionAnswer" Mode="In" Type="String" />
+      <Parameter Name="FirstName" Mode="In" Type="String" />
+      <Parameter Name="MiddleName" Mode="In" Type="String" />
+      <Parameter Name="LastName" Mode="In" Type="String" />
+      <Parameter Name="NickName" Mode="In" Type="String" />
+      <Parameter Name="DateOfBirth" Mode="In" Type="String" />
+      <Parameter Name="AnniversaryDate" Mode="In" Type="String" />
+      <Parameter Name="Gender" Mode="In" Type="String" />
+      <Parameter Name="IsAgeSecret" Mode="In" Type="Boolean" />
+      <Parameter Name="MobileNo" Mode="In" Type="String" />
+      <Parameter Name="UserPhoto" Mode="In" Type="String" />
+      <Parameter Name="AddressLine1" Mode="In" Type="String" />
+      <Parameter Name="CountryId" Mode="In" Type="Int32" />
+      <Parameter Name="StateId" Mode="In" Type="Int32" />
+      <Parameter Name="CityId" Mode="In" Type="Int32" />
+      <Parameter Name="PinCode" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="tblRelationships" EntityType="EventDBModel2.tblRelationship" />
+    <EntitySet Name="tblReligions" EntityType="EventDBModel2.tblReligion" />
+    <FunctionImport Name="SP_BindRelationship" ReturnType="Collection(EventDBModel2.BindRelationship)" />
+    <FunctionImport Name="SP_GetBirthdayDetailsByUserId" ReturnType="Collection(EventDBModel2.GetBirthdayDetailsByUserId)">
+      <Parameter Name="UserId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SP_GetBirthdayReminder" ReturnType="Collection(EventDBModel2.GetBirthdayReminder)">
+      <Parameter Name="BirthdayDetailsId" Mode="In" Type="Int32" />
+      <Parameter Name="UserId" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="BindCity">
+    <Property Type="Int32" Name="CityId" Nullable="false" />
+    <Property Type="Int32" Name="StateId" Nullable="false" />
+    <Property Type="Int32" Name="CountryId" Nullable="false" />
+    <Property Type="String" Name="CityName" Nullable="false" MaxLength="150" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="BindCountry">
+    <Property Type="Int32" Name="CountryId" Nullable="false" />
+    <Property Type="String" Name="CountryName" Nullable="false" MaxLength="50" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="BindHintQuestion">
+    <Property Type="Int32" Name="HintQuestionId" Nullable="false" />
+    <Property Type="String" Name="HintQuestion" Nullable="false" MaxLength="250" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="BindState">
+    <Property Type="Int32" Name="StateId" Nullable="false" />
+    <Property Type="Int32" Name="CountryId" Nullable="false" />
+    <Property Type="String" Name="StateName" Nullable="false" MaxLength="150" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="GetUserDetails">
+    <Property Type="Int32" Name="UserId" Nullable="false" />
+    <Property Type="String" Name="Email" Nullable="false" MaxLength="150" />
+    <Property Type="Int32" Name="HintQuetionId" Nullable="true" />
+    <Property Type="String" Name="NewHintQuestion" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="HintQuestionAnswer" Nullable="true" MaxLength="250" />
+    <Property Type="DateTime" Name="DateOfRegistraion" Nullable="true" Precision="23" />
+    <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="MiddleName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="NickName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Gender" Nullable="true" MaxLength="1" />
+    <Property Type="String" Name="DateOfBirth" Nullable="true" MaxLength="11" />
+    <Property Type="String" Name="AnniversaryDate" Nullable="true" MaxLength="11" />
+    <Property Type="Boolean" Name="IsAgeScreet" Nullable="true" />
+    <Property Type="String" Name="UserPhoto" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="MobileNo" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="AddressLine1" Nullable="true" MaxLength="500" />
+    <Property Type="Int32" Name="CountryId" Nullable="true" />
+    <Property Type="Int32" Name="StateId" Nullable="true" />
+    <Property Type="Int32" Name="CityId" Nullable="true" />
+    <Property Type="String" Name="PinCode" Nullable="true" MaxLength="10" />
+  </ComplexType>
+  <Association Name="FK_tblBirthdayReminder_tblBirthdayDetails1">
+    <End Type="EventDBModel2.tblBirthdayDetail" Role="tblBirthdayDetail" Multiplicity="1" />
+    <End Type="EventDBModel2.tblBirthdayReminder" Role="tblBirthdayReminder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblBirthdayDetail">
+        <PropertyRef Name="BirthdayDetailsId" />
+      </Principal>
+      <Dependent Role="tblBirthdayReminder">
+        <PropertyRef Name="BirthdayDetailsId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tblRelationship">
+    <Key>
+      <PropertyRef Name="RelationshipId" />
+    </Key>
+    <Property Name="RelationshipId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RelationshipName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="tblReligion">
+    <Key>
+      <PropertyRef Name="ReligionId" />
+    </Key>
+    <Property Name="ReligionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ReligionName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <ComplexType Name="BindRelationship">
+    <Property Type="Int32" Name="RelationshipId" Nullable="false" />
+    <Property Type="String" Name="RelationshipName" Nullable="true" MaxLength="50" />
+    <Property Type="Boolean" Name="IsActive" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="GetBirthdayDetailsByUserId">
+    <Property Type="Int32" Name="BirthdayDetailsId" Nullable="false" />
+    <Property Type="String" Name="DateOfBirth" Nullable="false" MaxLength="11" />
+    <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="NickName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Gender" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="EmailId" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="RelationshipName" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="GetBirthdayReminder">
+    <Property Type="Int32" Name="BirthdayReminder" Nullable="false" />
+    <Property Type="Int32" Name="UserId" Nullable="false" />
+    <Property Type="Int32" Name="BirthdayDetailsId" Nullable="false" />
+    <Property Type="Boolean" Name="C30DaysBefore" Nullable="true" />
+    <Property Type="Boolean" Name="C14DaysBefore" Nullable="true" />
+    <Property Type="Boolean" Name="C7DaysBefore" Nullable="true" />
+    <Property Type="Boolean" Name="C3DaysBefore" Nullable="true" />
+    <Property Type="Boolean" Name="DayofEvent" Nullable="true" />
+  </ComplexType>
+</Schema>

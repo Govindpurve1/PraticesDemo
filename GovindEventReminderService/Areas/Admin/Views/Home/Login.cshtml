@@ -1,0 +1,147 @@
+﻿
+@{
+    Layout =null;
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Login.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <link href="~/Content/bootstrap.css.map" rel="stylesheet" />
+  
+    <style>
+        .texBoxStyle{
+            background-color:black;
+            color:white;
+        }
+    </style>
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#UserName').focus();
+            $('input[type="text"]').each(function () {
+                $(this).focus(function () {
+                    $(this).addClass('texBoxStyle');
+                });
+                $(this).blur(function () {
+                    $(this).removeClass('texBoxStyle');
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+  
+        <div>
+            <div class="imgcontainer">
+
+              
+                <img src="~/Images/login.jpg" width="100%" style="height:300px" alt="Avatar" class="avatar">
+                <div align="center"style="background-color:#000000;text-decoration:solid;">Adminstration Login</div>
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-pull-4"></div>
+                    </div>
+                    <div class="col-md-pull-5" align="center" style="background-color:#808080;border:1px;padding:2px; height:25%">
+                      
+                        @using (Html.BeginForm("Login","Home",FormMethod.Post))
+                        {
+                            
+                                @*<div class="form-group">
+                                    <label class="control-label">Enter Email Id</label>
+                                   
+                                    <input class="control-label" name="UserName" id="UserName" type="text" placeholder="Enter Email Id" />
+                                </div>
+                                
+                                    <div class="form-group">
+                                        <label class="control-label">Password</label>
+
+                                        <input class="form-control" name="Password" id="Password" type="password" placeholder="Password" />
+                                        <div>
+                                        <span style="color:red;">@ViewBag.Error</span></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Login" class="btn btn-primary" />
+                                    </div>*@
+                               
+                                
+                            <table align="center">
+                                <tr>
+                                    <td></td>
+                                    <td align="left" style="padding:25px;">
+                                        @Html.Label("UserName")
+                                    </td>
+                                    <td>
+                                        <input class="control-label" name="UserName" id="UserName" type="text" placeholder="Enter Email Id" />
+                                    </td>
+                                    
+                                    
+                             
+
+                                </tr>
+                            
+                           
+                                <tr>
+                                    <td></td>
+                                    <td align="left" style="padding:15px;">
+                                        @Html.Label("Enter Password")
+                                    </td>
+                                    <td>
+                                        @Html.TextBox("Password", "", new
+                               {
+                                   placeholder = "Enetr Password"
+                               })
+                                    </td>
+                                 
+                                    <td>
+                                        <span>@ViewBag.Error</span>
+                                    </td>
+                                   
+                                </tr>
+                            
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <button type="submit" class="btn-default">Login</button>
+                                        &nbsp;&nbsp;
+                                        @*<input type="checkbox" checked="checked"> Remember me
+
+                                    </td>*@
+                                    @*<td>
+                                        
+                                        <button type="button" class="btn-default">Cancel</button>
+                                        &nbsp;&nbsp;
+                                        <b> <span class="psw">Forgot <a href="#">password?</a></span></b>
+                                    </td>*@
+                                </tr>
+                                
+                                </table>
+
+                                }
+
+
+                              
+
+
+</div>
+      </div>
+                <div align="center" style="background-color:#0d9b1d;text-decoration:solid;"><p style="font-family:Tahoma;font-size:12px">Copyright &copy;2017-2018</div>
+            </div>
+           
+        </div>
+   
+</body>
+</html>

@@ -1,0 +1,208 @@
+﻿@model GovindEventReminderService.Areas.User.Models.tblBirthdayDetail
+
+@{
+    ViewBag.Title = "AddBirthdays";
+    Layout = "~/Areas/User/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/themes/base/theme.css" rel="stylesheet" />
+
+
+<style type="text/css">
+    #btnAddBirthday, #btnBack {
+        border-radius: 8px;
+        padding: 8px 20px;
+        font-size: 12px;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    }
+
+        #btnAddBirthday:hover, #btnBack:hover {
+            background-color: red;
+            color: blue;
+        }
+</style>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#FirstName").focus();
+
+        $("#DateOfBirth").datepicker({
+            showOn: "both",
+            buttonImage: "../../Images/hh.png",
+            buttonImageOnly: true,
+            changeMonth: true,
+            changeYear: true,
+            maxDate: +0,
+            yearRange: "-100:+0",
+            dateFormat: "dd/M/yy"
+        });
+
+        $("#btnAddBirthday").click(function () {
+            debugger;
+            var firstName = $("#FirstName").val();
+            var dateOfBirth = $("#DateOfBirth").val();
+            var gender = $("#Gender").val();
+            var relationship = $("#Relationship").val();
+
+            var required = true;
+
+            if (firstName == "") {
+                $("#spanFName").html("First Name field is required").hide().fadeIn(1000);
+                required = false;
+            }
+            else {
+                $("#spanFName").html("");
+            }
+            if (dateOfBirth == "") {
+                $("#spanDOB").html("Date of birth field is required").hide().fadeIn(1000);
+                required = false;
+            }
+            else {
+                $("#spanDOB").html("");
+            }
+            if (gender == "") {
+                $("#spanGender").html("Gender field is required").hide().fadeIn(1000);
+                required = false;
+            }
+            else {
+                $("#spanGender").html("");
+            }
+            if (relationship == "") {
+                $("#spanrelationship").html("Relationship field is required").hide().fadeIn(1000);
+                required = false;
+            }
+            else {
+                $("#spanRelationship").html("");
+            }
+
+            if (required == false) {
+                return false;
+            }
+        });
+        
+    });
+</script>
+
+<h2 style="margin:0px;padding:5px">Add Birthdays</h2>
+<div style="padding:10px">
+    @using (Html.BeginForm("AddBirthdays", "Home", FormMethod.Post, new { id = "AddbirthdayForm1" }))
+    {
+        <table width="100%">
+            <tr>
+                <td colspan="3">
+                    <!--Show the status message-->
+                    @if (TempData["Status"] != null)
+                    {
+                        <b style="color:green">@TempData["Status"]</b>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+            <tr>
+                <td width="20%">
+                    <b>@Html.LabelFor(model => model.FirstName)</b>
+                </td>
+                <th width="2%">:</th>
+                <td>
+                    @Html.TextBoxFor(model => model.FirstName)
+                    &nbsp;
+                    <span id="spanFName" style="color:red;font-weight:bold"></span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    <b>@Html.LabelFor(model => model.LastName)</b>
+                </td>
+                <th>:</th>
+                <td>
+                    @Html.TextBoxFor(model => model.LastName)
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    <b>@Html.LabelFor(model => model.DateOfBirth)</b>
+                </td>
+                <th>:</th>
+                <td>
+                    @Html.TextBoxFor(model => model.DateOfBirth)
+                    &nbsp;
+                    <span id="spanDOB" style="color:red;font-weight:bold"></span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    <b>@Html.LabelFor(model => model.Gender)</b>
+                </td>
+                <th>:</th>
+                <td>
+                    @Html.DropDownListFor(model => Model.Gender, (IEnumerable<SelectListItem>)ViewBag.Gender, "Select")
+                    &nbsp;
+                    <span id="spanGender" style="color:red;font-weight:bold"></span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    <b>@Html.LabelFor(model => model.RelationshipId)</b>
+                </td>
+                <th>:</th>
+                <td>
+                    @Html.DropDownListFor(model => Model.RelationshipId, (IEnumerable<SelectListItem>)ViewBag.Relationships, "Select")
+                    &nbsp;
+                    <span id="spanRelationship" style="color:red;font-weight:bold"></span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td>
+                    <input type="submit" value="Add Birthday" id="btnAddBirthday" />
+                    <input type="button" id="btnBack" value="Back" onclick="document.location.href='@Url.Action("MyReminders")'" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="3">&nbsp;</td>
+            </tr>
+        </table>
+    }
+</div>
+
+
+
+                

@@ -1,0 +1,24 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title> WelCome to Admin:@ViewBag.Title</title>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryui")
+        @Scripts.Render("~/bundles/jqueryval")
+        <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+        <link href="~/Content/themes/base/theme.css" rel="stylesheet" />
+
+    </head>
+    <body>
+        <div>
+            <img src="~/Images/login.jpg" width="100%" style="height:300px" alt="Avatar" class="avatar">
+        </div>
+        <div>
+           
+                    @RenderBody()
+             </div>
+
+    </body>
+</html>

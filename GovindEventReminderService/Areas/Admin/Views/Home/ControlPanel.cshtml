@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "ControlPanel";
+    Layout = "~/Areas/Admin/Views/Shared/_ControlPanelNew.cshtml";
+}
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/themes/base/dialog.css" rel="stylesheet" />
+<link href="~/Scripts/bootstrap.js" rel="stylesheet" />
+        <link href="~/Content/bootstrap-theme.css" rel="stylesheet"/>
+<link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+ <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#divDialog').dialog({
+            title: "Last Accessed Date Time",
+            width: 400,
+            model: true,
+            draggable: true,
+            show: {
+                effect: "slide",
+                duration: 2000
+            },
+            hide: {
+                effect: "slide",
+                duration: 2000
+            }
+        });
+
+        $("#tableDashboard").find("td").addClass("tdStyle").find("a").addClass("linkStyle")
+        $("#tableDashboard").find("td").hover(function () {
+            $(this).css({ "background-Color": "yellow", "border": "10px inset black" }).find("a").css("color", "white");
+        }),
+        function () {
+            $(this).css({ "background-Color": "Red", "border": "10px inset black" }).find("a").css("color", "white");
+
+        }
+
+
+    });
+
+
+
+    </script>
+
+<style type="text/css">
+    .tdStyle {
+        width: 25%;
+        height: 75%;
+        border: 10px outset green;
+        border-radius: 10px;
+        margin: 5px;
+        background-color: aqua;
+        color: white;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .linkStyle {
+        font-family: Tahoma;
+        font-size: 20px;
+        font-weight: bold;
+        color: black;
+        text-shadow: 5px 2px 5px green;
+        text-decoration: none;
+    }
+</style>
+
+
+
+<img src="~/Images/login.jpg" width="200%" style="height:250px" alt="Avatar" class="avatar">
+<div id="divDialog" style="text-align:center">
+    <b style="font-size:20px" align="center">
+        <br />
+        @Convert.ToDateTime(Session["lastAccessDateTime"]).ToString("dddd,dd MM yyyy hh:mm:ss:tt")
+    </b>
+
+</div>
+<table style="width:200%" id="tableDashboard">
+    <tr>
+        <td class="tdStyle">
+            @Html.ActionLink("ChangePassword", "ChangePassword", "Home", new
+       {
+           @class = "linkStyle"
+       })
+        </td>
+        <td class="tdStyle">
+            @Html.ActionLink("Mange Country", "Index", "Country",null, new
+       {
+           @class = "linkStyle"
+       })
+        </td>
+        <td class="tdStyle">
+            @Html.ActionLink("Manage State", "Index", "State",null, new
+       {
+           @class = "linkStyle"
+       })
+        </td>
+        <td class="tdStyle">
+            @Html.ActionLink("Manage City", "Index", "City",null, new
+       {
+           @class = "linkStyle"
+       })
+        </td>
+    </tr>
+    <tr>
+        <td class="tdStyle">
+            @Html.ActionLink("Manage Hint question", "Index", "HintQuestion", new
+       {
+           @class = "linkStyle"
+       })
+        </td>
+        <td class="tdStyle" , style="border-color:aqua">
+            @Html.ActionLink("Manage Religion", "Index", "Religion", new
+       {
+           @class = "linkStyle"
+       })
+        </td>
+        <td class="tdStyle" , style="border-color:aqua">
+            @Html.ActionLink("Manage Relationship", "Index", "Relationship", new
+       {
+           @class = "linkStyle"
+       })
+        </td>
+        <td class="tdStyle"></td>
+    </tr>
+    <tr>
+        <td class="tdStyle">&nbsp;</td>
+        <td class="tdStyle"></td>
+        <td class="tdStyle"></td>
+        <td></td>
+    </tr>
+
+</table>
+ 
